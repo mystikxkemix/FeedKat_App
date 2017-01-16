@@ -43,9 +43,9 @@ public class Interface extends JPanel {
         
 		g.setFont(ConstantsAndMethods._Font_Arial_Rounded_MT_Bold_20);
 		g.setColor(Color.black);
-		g.drawString("Collier n° : "+ ConstantsAndMethods._Collar_ID,150,70);
+		g.drawString("Collier nÂ° : "+ ConstantsAndMethods._Collar_ID,150,70);
 		g.drawString("Nom : " + ConstantsAndMethods._Cat_Name,200,170);
-		g.drawString("Âge : " + ConstantsAndMethods._Cat_Age,500,170);
+		g.drawString("Age : " + ConstantsAndMethods._Cat_Age,500,170);
 		g.drawString("Niveau de Pile",200,120);
 		g.drawString(ConstantsAndMethods._Battery_Value + "%", 810,122);
 		g.drawString("Poids : " + ConstantsAndMethods._Cat_Weight + " Kg",800,170);
