@@ -52,7 +52,7 @@ public class Connection extends JFrame implements ActionListener, MouseListener 
 			
 			this.setTitle("Connection BLE");
 			this.setSize(400,364);
-			this.show();
+			this.setVisible(true);
 			
 		}
 
