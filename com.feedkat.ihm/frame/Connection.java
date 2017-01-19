@@ -4,6 +4,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+import org.jdeferred.DoneCallback;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -15,6 +20,10 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import ConstantsAndMethods.ConstantsAndMethods;
+import Model.CatBasics;
+import WebRequest.FeedKatHttpRequest;
+import WebRequest.HttpRequest;
+import WebRequest.onResponse;
 
 public class Connection extends JFrame implements ActionListener, MouseListener {
 	   /**
@@ -65,7 +74,15 @@ public class Connection extends JFrame implements ActionListener, MouseListener 
 				System.out.println("attempting to connect");
 				//Connection au module BLE
 				if(BLEisConnect == 1)
-				{
+				{	
+				
+					FeedKatHttpRequest.getCatBasics("")
+					.then(new DoneCallback<CatBasics>() {
+						@Override
+						public void onDone(CatBasics cat) {
+							System.out.println("Cat : " + cat);
+						}
+					});
 					System.out.println("BLE Connected");
 					JOptionPane.showMessageDialog(null, "Connected !");
 					this.dispose();
