@@ -1,16 +1,12 @@
 package frame;
 
-import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
+
 
 import ConstantsAndMethods.ConstantsAndMethods;
 
@@ -20,7 +16,6 @@ public class Fenetre extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	JPanel GraphPane = new JPanel();
 	Interface interFace;
 	DynamicGraphCat chart;
 	ImageIcon img = new ImageIcon(ConstantsAndMethods._IconApp_FeedKat);
@@ -28,7 +23,7 @@ public class Fenetre extends JFrame {
 	public Fenetre(){
 		
 		interFace = new Interface();
-		interFace.setPreferredSize(new Dimension(1200,200));
+		interFace.setPreferredSize(new Dimension(1200,250));
 		
 		chart = new DynamicGraphCat("Cat Activities");
 		

@@ -17,16 +17,17 @@ public class ConstantsAndMethods {
     public static final Font		_Font_Arial_Rounded_MT_Bold_50		= new Font("Arial Rounded MT Bold", Font.BOLD, 50);
     public static final Font		_Font_Arial_Rounded_MT_Bold_20		= new Font("Arial Rounded MT Bold", Font.BOLD, 20);
     
-    public static final String		_IMGS_Folder						= "./ressources/Images/";
+    public static final String		_IMGS_Folder						= "./resources/Images/";
     public static final String		_Logo_FeedKat						= _IMGS_Folder + "Logo_FeedKat.png";
     public static final String		_Bluetooth_Gif						= _IMGS_Folder + "Bluetooth.gif";
     public static final String		_IconApp_FeedKat					= _IMGS_Folder + "IconApp_FeedKat.png";
     
     public static final String		_Cat_Age							= "18 mois";
-    public static final double		_Cat_Weight							= 2.5;
+    public static final double		_Cat_Weight							= 2.6;
     public static final String		_Cat_Name							= "Grizby";
     public static final int			_Battery_Value						= 50;
     public static final int			_Collar_ID							= 3;
     public static int				_YCat								= 10;
     public static int				_XCat								= 50;
+    public static final int			_Activity							= 25;
 }

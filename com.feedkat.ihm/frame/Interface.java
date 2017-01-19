@@ -49,6 +49,7 @@ public class Interface extends JPanel {
 		g.drawString("Niveau de Pile",200,120);
 		g.drawString(ConstantsAndMethods._Battery_Value + "%", 810,122);
 		g.drawString("Poids : " + ConstantsAndMethods._Cat_Weight + " Kg",800,170);
+		g.drawString("Activity : "+ ConstantsAndMethods._Activity, 800, 230);
     
 		if (ConstantsAndMethods._Battery_Value >= 0 && ConstantsAndMethods._Battery_Value <= 100){
 			x = ConstantsAndMethods._Battery_Value * 4;

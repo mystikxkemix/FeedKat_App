@@ -40,9 +40,9 @@ public class Panneau extends JPanel {
         
 		g.setFont(ConstantsAndMethods._Font_Arial_Rounded_MT_Bold_20);
 		g.setColor(Color.black);
-		g.drawString("Collier n° : "+ ConstantsAndMethods._Collar_ID,80,160);
+		g.drawString("Collier nÂ° : "+ ConstantsAndMethods._Collar_ID,80,160);
 		g.drawString("Nom : " + ConstantsAndMethods._Cat_Name,80,280);
-		g.drawString("Âge : " + ConstantsAndMethods._Cat_Age,400,280);
+		g.drawString("Ã‚ge : " + ConstantsAndMethods._Cat_Age,400,280);
 		g.drawString("Niveau de Pile",80,220);
 		g.drawString(ConstantsAndMethods._Battery_Value + "%", 670,220);
 		g.drawString("Poids : " + ConstantsAndMethods._Cat_Weight + " Kg",700,280);
