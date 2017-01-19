@@ -18,10 +18,12 @@ public class Fenetre extends JFrame {
 	
 	Interface interFace;
 	DynamicGraphCat chart;
-	ImageIcon img = new ImageIcon(ConstantsAndMethods._IconApp_FeedKat);
+	ImageIcon img;
+	
+	public Fenetre()
+	{
+		img = new ImageIcon(ConstantsAndMethods._IconApp_FeedKat);
 
-	public Fenetre(){
-		
 		interFace = new Interface();
 		interFace.setPreferredSize(new Dimension(1200,250));
 		

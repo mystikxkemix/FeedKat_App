@@ -1,5 +1,7 @@
 package frame;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import java.awt.*;
 import java.io.File;
@@ -21,6 +23,10 @@ public class Interface extends JPanel {
 		int x = 0;
 		
 		Dimension d = this.getSize();
+		if (ConstantsAndMethods.cat==null){
+
+			return;
+		}
 		
 		try {
 			Image img = ImageIO.read(new File(ConstantsAndMethods._Logo_FeedKat));
@@ -43,12 +49,12 @@ public class Interface extends JPanel {
         
 		g.setFont(ConstantsAndMethods._Font_Arial_Rounded_MT_Bold_20);
 		g.setColor(Color.black);
-		g.drawString("Collier n° : "+ ConstantsAndMethods._Collar_ID,150,70);
-		g.drawString("Nom : " + ConstantsAndMethods._Cat_Name,200,170);
-		g.drawString("Age : " + ConstantsAndMethods._Cat_Age,500,170);
-		g.drawString("Niveau de Pile",200,120);
+		g.drawString("Collar n° : "+ ConstantsAndMethods._Collar_ID,150,70);
+		g.drawString("Name : " + ConstantsAndMethods.cat.getName(),200,170);
+		g.drawString("Birthday : " + ConstantsAndMethods.cat.getBirthDate(),500,170);
+		g.drawString("Battery level",200,120);
 		g.drawString(ConstantsAndMethods._Battery_Value + "%", 810,122);
-		g.drawString("Poids : " + ConstantsAndMethods._Cat_Weight + " Kg",800,170);
+		g.drawString("Weight : " + ConstantsAndMethods.cat.getWeight(),800,170);
 		g.drawString("Activity : "+ ConstantsAndMethods._Activity, 800, 230);
     
 		if (ConstantsAndMethods._Battery_Value >= 0 && ConstantsAndMethods._Battery_Value <= 100){

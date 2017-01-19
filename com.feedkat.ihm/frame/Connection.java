@@ -8,6 +8,8 @@ import javax.swing.JPanel;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import ConnectionBluetooth.CollarBluetooth;
+
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -41,6 +43,8 @@ public class Connection extends JFrame implements ActionListener, MouseListener 
 			
 			//connect = new JLabel("Click to connect on BLE", SwingConstants.CENTER);
 			connection = new JButton("Connection");
+			
+			//new CollarBluetooth().run();
 			
 			Icon icon = new ImageIcon(ConstantsAndMethods._Bluetooth_Gif);
 			JLabel BLE = new JLabel(icon);
@@ -80,7 +84,7 @@ public class Connection extends JFrame implements ActionListener, MouseListener 
 						@Override
 						public void onSuccess(CatBasics result) {
 							System.out.println("Cat : " + result);
-							
+							ConstantsAndMethods.cat = result;
 						}
 					});
 					

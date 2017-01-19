@@ -16,23 +16,19 @@ import com.sun.istack.internal.Nullable;
 
 import sun.net.www.http.HttpClient;
 
-public class HttpRequest
-{
-	public enum Method
-	{
+public class HttpRequest {
+	public enum Method {
 		POST("POST"),
 		GET("GET"),
 		DELETE("DELETE"),
 		PUT("PUT");
 		
 		private String mKey;
-		Method(String key)
-		{
+		Method(String key) {
 			this.mKey = key;
 		}
 		
-		public final String getKey()
-		{
+		public final String getKey() {
 			return this.mKey;
 		}
 	}
@@ -44,18 +40,15 @@ public class HttpRequest
 	private JSONObject mParams;
 	private Runnable requestRunnable;
 	
-	public HttpRequest(@NotNull Method type, @NotNull String url)
-	{
+	public HttpRequest(@NotNull Method type, @NotNull String url) {
 		this(type, url, null, null, null);
 	}
 	
-	public HttpRequest(@NotNull Method type, @NotNull String url, @NotNull JSONObject obj)
-	{
+	public HttpRequest(@NotNull Method type, @NotNull String url, @NotNull JSONObject obj) {
 		this(type, url, obj, null, null);
 	}
 
-	public HttpRequest(@NotNull Method type,@NotNull String url, @Nullable JSONObject params, @Nullable onResponse.SuccessListener<JSONObject> onSuccess, @Nullable onResponse.ErrorListener<String> onError)
-	{
+	public HttpRequest(@NotNull Method type,@NotNull String url, @Nullable JSONObject params, @Nullable onResponse.SuccessListener<JSONObject> onSuccess, @Nullable onResponse.ErrorListener<String> onError) {
 		this.mUrl = url;
 		this.mType = type;
 		this.mOnSuccess = onSuccess;
@@ -64,16 +57,12 @@ public class HttpRequest
 		initRunnable();
 	}
 	
-	private void initRunnable()
-	{
-		requestRunnable = new Runnable()
-		{
+	private void initRunnable() {
+		requestRunnable = new Runnable() {
 			@Override
-			public void run()
-			{
+			public void run() {
 				try
 				{
-					Thread.sleep(3000);
 					URL url = new URL(mUrl);
 					mConnection = (HttpURLConnection) url.openConnection();
 					mConnection.setRequestMethod(mType.getKey());
@@ -115,13 +104,11 @@ public class HttpRequest
 		};
 	}
 	
-	public void execute()
-	{
-		execute(false);
+	public void execute() {
+		execute(true);
 	}
 	
-	public void execute(boolean asynchrone)
-	{	
+	public void execute(boolean asynchrone) {	
 		if(requestRunnable == null) return;
 		
 		if(asynchrone) 	new Thread(requestRunnable, "HttpRequestThread").start();
