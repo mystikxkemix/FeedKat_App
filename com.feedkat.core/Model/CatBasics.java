@@ -24,7 +24,7 @@ public class CatBasics
 	public final String getWeight()
 	{
 		Double w = weight*0.001;
-		return String.format("%f kg", w);
+		return String.format("%.1f kg", w);
 	}
 	
 	public final String getBirthDate()

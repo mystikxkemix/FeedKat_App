@@ -1,10 +1,5 @@
 package WebRequest;
 
-import org.jdeferred.Deferred;
-import org.jdeferred.DoneCallback;
-import org.jdeferred.FailCallback;
-import org.jdeferred.Promise;
-import org.jdeferred.impl.DeferredObject;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -26,29 +21,6 @@ public class FeedKatHttpRequest
 		return link;
 	}
 	
-	// send a request and return Promise as callback
-	public static Promise<JSONObject, String, Double> sendRequest(Method mode, String route, JSONObject params)
-	{
-		final Deferred<JSONObject, String, Double> deferred = new DeferredObject<JSONObject, String, Double>();
-		
-		sendRequest(mode, route, params,
-				new SuccessListener<JSONObject>() {
-					@Override
-					public void onSuccess(JSONObject result) {
-						deferred.resolve(result);
-					}
-				},
-				new ErrorListener<String>() {
-					@Override
-					public void onError(String result) {
-						deferred.reject(result);
-					}
-				}
-		);
-		
-		return deferred.promise();
-	}
-	
 	// send a request and use listeners as callback
 	public static void sendRequest(Method mode, String route, JSONObject params, SuccessListener<JSONObject> onSuccess, ErrorListener<String> onError)
 	{
@@ -57,32 +29,32 @@ public class FeedKatHttpRequest
 	}
 	
 	
-	// Custom request to have the basics info of a cat
-	public static Promise<CatBasics, String, Double> getCatBasics(String serial_collar)
+	public static void getCatBasics(String serial_collar, SuccessListener<CatBasics> onSuccess)
 	{
-		final Deferred<CatBasics, String, Double> deferred = new DeferredObject<CatBasics, String, Double>();
+		getCatBasics(serial_collar, onSuccess, null);
+	}
+	// Custom request to have the basics info of a cat
+	public static void getCatBasics(String serial_collar, SuccessListener<CatBasics> onSuccess, ErrorListener<String> onError)
+	{
 		
-		sendRequest(Method.GET, "/catbasics/"+serial_collar, null)
-		.then(new DoneCallback<JSONObject>() {
-			@Override
-			public void onDone(JSONObject json) {
-				CatBasics cat;
-				try {
-					cat = new CatBasics(json);
-					deferred.resolve(cat);
-				} catch (JSONException e) {
-					deferred.reject(e.toString());
-				}
-				
-			}
-		})
-		.fail(new FailCallback<String>() {
-			@Override
-			public void onFail(String res) {
-				deferred.reject(res);
-			}
-		});
-		
-		return deferred.promise();
+		sendRequest(Method.GET, "/catbasics/"+serial_collar, null,
+				new SuccessListener<JSONObject>() {
+					@Override
+					public void onSuccess(JSONObject json) {
+						CatBasics cat;
+						try {
+							cat = new CatBasics(json);
+							onSuccess.onSuccess(cat);
+						} catch (JSONException e) {
+							if(onError != null) onError.onError("Erreur de JSON");
+						}
+					}
+				},
+				new ErrorListener<String>() {
+					@Override
+					public void onError(String result) {
+						if(onError != null) onError.onError(result);
+					}
+				});
 	}
 }
