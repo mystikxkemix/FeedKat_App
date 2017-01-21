@@ -28,9 +28,9 @@ public class ConstantsAndMethods {
     public static final String		_Cat_Age							= "18 mois";
     public static final double		_Cat_Weight							= 2.6;
     public static final String		_Cat_Name							= "Grizby";
-    public static final int			_Battery_Value						= 50;
+    public static final int			_Battery_Value						= 96;
     public static final int			_Collar_ID							= 3;
     public static int				_YCat								= 10;
     public static int				_XCat								= 50;
-    public static final int			_Activity							= 25;
+    public static int			_Activity							= 25;
 }

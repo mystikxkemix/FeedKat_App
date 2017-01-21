@@ -25,6 +25,7 @@ import Model.CatBasics;
 import WebRequest.FeedKatHttpRequest;
 import WebRequest.HttpRequest;
 import WebRequest.onResponse;
+import WebRequest.onResponse.ErrorListener;
 import WebRequest.onResponse.SuccessListener;
 
 public class Connection extends JFrame implements ActionListener, MouseListener {
@@ -37,14 +38,13 @@ public class Connection extends JFrame implements ActionListener, MouseListener 
 		
 		JButton connection;
 		JLabel connect;
+		static Fenetre f;
 		
 		
-		public Connection (){
+	public Connection (){
 			
 			//connect = new JLabel("Click to connect on BLE", SwingConstants.CENTER);
 			connection = new JButton("Connection");
-			
-			//new CollarBluetooth().run();
 			
 			Icon icon = new ImageIcon(ConstantsAndMethods._Bluetooth_Gif);
 			JLabel BLE = new JLabel(icon);
@@ -67,6 +67,8 @@ public class Connection extends JFrame implements ActionListener, MouseListener 
 			this.setSize(400,364);
 			this.setVisible(true);
 			
+			//new CollarBluetooth();
+			connection.doClick();
 		}
 
 		@Override
@@ -85,13 +87,24 @@ public class Connection extends JFrame implements ActionListener, MouseListener 
 						public void onSuccess(CatBasics result) {
 							System.out.println("Cat : " + result);
 							ConstantsAndMethods.cat = result;
+							f.interFace.paintComponent(f.interFace.getGraphics());
+							
 						}
-					});
+					}, new ErrorListener<String>()
+							{
+
+								@Override
+								public void onError(String result) {
+									// TODO Auto-generated method stub
+									System.out.println("Error : " + result);
+								}
+						
+							});
 					
 					System.out.println("BLE Connected");
 					JOptionPane.showMessageDialog(null, "Connected !");
 					this.dispose();
-					Fenetre f = new Fenetre();
+					f = new Fenetre();
 					f.setVisible(true);
 				}
 				else

@@ -2,108 +2,79 @@ package ConnectionBluetooth;
 
 import java.time.LocalDate;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.bluetooth.*;
+import javax.microedition.io.Connection;
 
 import org.bluez.Adapter1;
 import org.bluez.Device1;
 import org.bluez.GattCharacteristic1;
 import org.bluez.GattService1;
 
-import de.serviceflow.codegenj.*;
+import WebRequest.onResponse.SuccessListener;
+import de.serviceflow.codegenj.ObjectManager;
+import tinyb.BluetoothDevice;
+import tinyb.BluetoothGattService;
+import tinyb.BluetoothManager;
 
-public class CollarBluetooth implements Runnable{
+public class CollarBluetooth{
 
-	/** Constructor */
-	public CollarBluetooth() {
-	}
+	    protected ArrayList<RemoteDevice> devicesDiscovered = new ArrayList();
+	    protected final Object inquiryCompletedEvent = new Object();
+	    private LocalDevice local;
+	    private DiscoveryAgent discoveryAgent;
 
-	@Override
-	public void run() {
-		try {
-			waitForConnection();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+	    public CollarBluetooth()
+	    {
+	    	try {
+	    		BluetoothDevice collar = getDevice("FeedKat_C001");
+	    		getService(collar, "0xA000");
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}   
+	    }
 
-
-	public static void waitForConnection() throws InterruptedException {
-
-	    ObjectManager m = ObjectManager.getInstance();
-	    ObjectManager.getLogger().setLevel(Level.FINE);         
-
-	    // Show what's on the bus:
-	    m.dump();
-
-	    List<Adapter1> adapters = m.getAdapters();
-	    System.out.println(" ==> # = " + adapters.size());
-
-	    // Find our bluetooth adapter, and start Discovery ...
-	    Adapter1 defaultAdapter = null;
-	    for (Adapter1 a : adapters) {
-	        System.out.println(" ==> Adapter: " + a.getName());
-	        try {
-	            a.startDiscovery();
-	        } catch (IOException e) {
-	        	System.out.println(" ... ignored.");
-	            continue;
+	    static BluetoothDevice getDevice(String address) throws InterruptedException  {
+	        BluetoothManager manager = BluetoothManager.getBluetoothManager();
+	        BluetoothDevice sensor = null;
+	        for (int i = 0; (i < 15) && true; ++i) {
+	            List<BluetoothDevice> list = manager.getDevices();
+	             for (BluetoothDevice device : list) {
+	                System.out.println("Name "+device.getName());
+	                /*
+	                 * Here we check if the address matches.
+	                 */
+	                if (device.getAddress().equals(address))
+	                    sensor = device;
+	            }
+	            if (sensor != null) {
+	                return sensor;
+	            }
+	            Thread.sleep(4000);
 	        }
-	        defaultAdapter = a;
+	        return null;
 	    }
 	    
-	    if (defaultAdapter==null) {
-	        System.out.println("no useable adapter found. Exit.");
-	        return;
-	    }
-
-	    // Wait for devices to be discovered
-	    Thread.sleep(5000);
-
-	    Adapter1 a = defaultAdapter;
-	        for (Device1 d : a.getDevices()) {
-	            if ("FKC001".equals(d.getName())) {
-	                System.out.println(" ==> Device: " + d.getName());
-	                try {
-	                    if (!d.getConnected()) {
-	                        d.connect();
-	                        System.out.println(" ... connected.");
-	                    }
-	                    else {
-	                        System.out.println(" ... already connected.");
-	                    }
-	                } catch (IOException e) {
-	                    System.out.println(" ... ignored: "+e.getMessage());
-	                }
-	            }
-	            else {
-	                System.out.println(" --> Device " + d.getName()+" skipped.");
-	            }
-	        }
-
-	    // Use the API to traverse through the tree.
-	    System.out.println("*** Object Tree:");
-	    for (Adapter1 adap : adapters) {
-	        System.out.println(" ... adapter "+adap.getObjectPath()+"  "+adap.getName());
-	        for (Device1 d : adap.getDevices()) {
-	            System.out.println("  .. device "+d.getObjectPath()+"  "+d.getName());
-	            for (GattService1 s :  d.getServices()) {
-	                System.out.println("   . service "+s.getObjectPath()+"  "+s.getUUID());
-	                for (GattCharacteristic1 c :  s.getCharacteristics()) {
-	                    System.out.println("    . char "+c.getObjectPath()+"  "+c.getUUID());
-	                }
-	            }
-	        }
-	    }
-
-	    try {
-	        defaultAdapter.stopDiscovery();
-	        System.out.println(" ... stopped.");
-	    } catch (IOException e) {
-	        System.out.println(" ... ignored.");
-	    }
-
-	}
-}
+	    static BluetoothGattService getService(BluetoothDevice device, String 
+	    		 UUID) throws InterruptedException {
+	    		    System.out.println("Services exposed by device:");
+	    		    BluetoothGattService tempService = null;
+	    		    List<BluetoothGattService> bluetoothServices = null;
+	    		    do {
+	    		        bluetoothServices = device.getServices();
+	    		        for (BluetoothGattService service : bluetoothServices) {
+	    		            System.out.println("UUID: " + service.getUUID());
+	    		            if (service.getUUID().equals(UUID))
+	    		                tempService = service;
+	    		        }
+	    		        Thread.sleep(4000);
+	    		    } while (bluetoothServices != null && bluetoothServices.isEmpty() && true);
+	    		    return tempService;
+	    		}
+	    
+	} // class RemoteDeviceDiscovery

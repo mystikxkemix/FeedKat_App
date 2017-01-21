@@ -44,6 +44,7 @@ public class Fenetre extends JFrame {
 		this.setVisible(true);
     
     }
+	
 
 }
 

@@ -97,7 +97,7 @@ public class HttpRequest {
 				    if(mOnSuccess!=null) mOnSuccess.onSuccess(new JSONObject(response.toString()));
 					
 				} catch (Exception e) {
-					if(mOnError != null) mOnError.onError(e.toString());
+					if(mOnError != null) mOnError.onError("URL : " + mUrl.toString() + " TYPE : " + mType.getKey() + " error : " + e.toString());
 				}
 				
 			}

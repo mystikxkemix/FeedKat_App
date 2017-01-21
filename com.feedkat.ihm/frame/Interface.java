@@ -28,6 +28,8 @@ public class Interface extends JPanel {
 			return;
 		}
 		
+		super.paintComponent(g);
+		
 		try {
 			Image img = ImageIO.read(new File(ConstantsAndMethods._Logo_FeedKat));
 			g.drawImage(img, 25,10, 100,100, this);
